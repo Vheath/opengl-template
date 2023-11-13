@@ -8,8 +8,7 @@ public:
     inline static unsigned int VAO, VBO, EBO;
 
 private:
-    static bool mFirstCall;
-
+    static bool firstCall;
     constexpr static float mVertices[] = {
         -0.5f, 0.5f, 0.5f,
         0.5f, 0.5f, 0.5f,

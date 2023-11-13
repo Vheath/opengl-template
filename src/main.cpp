@@ -2,12 +2,14 @@
 #include "include/common.h"
 #include "include/cube.h"
 #include "include/shader.h"
+#include "include/sphere.h"
 #include "lib/stb_image/stb_image.h"
 
 #include <glad/glad.h>
 
 #include <GLFW/glfw3.h>
 #include <cmath>
+#include <glm/common.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -51,21 +53,15 @@ int main()
         "../src/ShadersGLSL/shader.frag");
 
     Camera ourCamera {
-        glm::vec3(3.0f, 3.0f, 3.0f),
-        glm::vec3(-0.5f, -0.5f, -0.5f),
+        glm::vec3(0.0f, 0.0f, 3.0f),
+        glm::vec3(-0.0f, -0.0f, -1.0f),
         glGetUniformLocation(ourShader.ID, "view"),
         glGetUniformLocation(ourShader.ID, "projection")
     };
-    int count = 10;
-    int radius = 1;
-    float step = 360.0 / count;
 
-    float* vertices { new float[count * 3] {} };
-    for (int i { 0 }; i < count; i += 3) {
-        vertices[i + 0] = std::sin(step * i); // x
-        vertices[i + 1] = std::cos(step * i); // y
-        vertices[i + 2] = 0; // z
-    }
+    int modelLoc { glGetUniformLocation(ourShader.ID, "model") };
+    Cube cube1 { modelLoc, glm::vec3(1.5f, 1.5f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f) };
+    Sphere sphere1 { modelLoc, 1.0f, 10, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f) };
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)+0);
     glEnableVertexAttribArray(0);
@@ -78,8 +74,14 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         ourShader.use();
+
+        glm::vec3 color = glm::vec3(0.5f, 0.5f, 0.2f);
+        glUniform3fv(glGetUniformLocation(ourShader.ID, "uniColor"), 1, glm::value_ptr(color));
+
+        sphere1.setRotation(0, glm::vec3(1.0f, 1.0f, 1.0f));
+        ourCamera.process();
+        sphere1.render();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
