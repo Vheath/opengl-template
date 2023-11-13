@@ -7,12 +7,12 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-bool Cube::firstCall = true;
+bool Cube::mFirstCall = true;
 Cube::Cube(int modelLoc, glm::vec3 scale, glm::vec3 translate)
     : RenderableObject { modelLoc, scale, translate }
 {
-    if (firstCall) {
-        firstCall = false;
+    if (mFirstCall) {
+        mFirstCall = false;
 
         glGenVertexArrays(1, &Cube::VAO);
         glGenBuffers(1, &Cube::VBO);
@@ -20,10 +20,10 @@ Cube::Cube(int modelLoc, glm::vec3 scale, glm::vec3 translate)
         glBindVertexArray(Cube::VAO);
 
         glBindBuffer(GL_ARRAY_BUFFER, Cube::VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Cube::vertices), Cube::vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(mVertices), mVertices, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Cube::EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Cube::indicies), Cube::indicies, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mIndicies), mIndicies, GL_STATIC_DRAW);
     }
 };
 
@@ -33,8 +33,7 @@ void Cube::render()
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::scale(model, mScaleVector);
     model = glm::translate(model, mTranslateVector);
-    model = glm::rotate(model, mRadians, mRotationVector);
-    glUniformMatrix4fv(mModelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    model = glm::rotate(model, mRadians, mRotationVector); glUniformMatrix4fv(mModelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 }

@@ -13,6 +13,7 @@ add_executable(
     ${PROJECT_SOURCE_DIR}/src/camera.cpp
     ${PROJECT_SOURCE_DIR}/src/renderableobj.cpp
     ${PROJECT_SOURCE_DIR}/src/cube.cpp
+    ${PROJECT_SOURCE_DIR}/src/sphere.cpp
 )
 target_compile_features(out PRIVATE cxx_std_20)
 

@@ -8,9 +8,9 @@ public:
     inline static unsigned int VAO, VBO, EBO;
 
 private:
-    static bool firstCall;
+    static bool mFirstCall;
 
-    constexpr static float vertices[] = {
+    constexpr static float mVertices[] = {
         -0.5f, 0.5f, 0.5f,
         0.5f, 0.5f, 0.5f,
         0.5f, -0.5f, 0.5f,
@@ -20,7 +20,7 @@ private:
         0.5f, -0.5f, -0.5f,
         -0.5f, -0.5f, -0.5f
     };
-    constexpr static unsigned int indicies[] = {
+    constexpr static unsigned int mIndicies[] = {
         0, 3, 2, // Front
         2, 1, 0,
         1, 5, 6, // Right
