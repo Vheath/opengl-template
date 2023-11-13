@@ -21,7 +21,7 @@ protected:
     float mRadians {};
     glm::vec3 mScaleVector {};
     glm::vec3 mTranslateVector {};
-    glm::vec3 mRotationVector {};
+    glm::vec3 mRotationVector { glm::vec3(1.0f, 1.0f, 1.0f) };
 };
 
 #endif // !RENDERABLEOBJECT_H

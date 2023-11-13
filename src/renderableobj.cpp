@@ -20,7 +20,10 @@ void RenderableObject::setScaleVec(glm::vec3 scale)
 
 void RenderableObject::setRotation(float radians, glm::vec3 rotation)
 {
-    mRotationVector = rotation;
+    if (rotation != glm::vec3(0.0f, 0.0f, 0.0f))
+        mRotationVector = rotation;
+    else
+        mRotationVector = glm::vec3(1.0f, 1.0f, 1.0f);
     mRadians = radians;
 }
 
