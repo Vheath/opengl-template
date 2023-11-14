@@ -8,7 +8,7 @@
 #include <iostream>
 
 bool Cube::firstCall = true;
-Cube::Cube(int modelLoc, glm::vec3 scale, glm::vec3 translate)
+Cube::Cube(const int modelLoc, const glm::vec3 scale, const glm::vec3 translate)
     : RenderableObject { modelLoc, scale, translate }
 {
     if (firstCall) {
@@ -27,7 +27,7 @@ Cube::Cube(int modelLoc, glm::vec3 scale, glm::vec3 translate)
     }
 };
 
-void Cube::render()
+void Cube::render() const
 {
     glBindVertexArray(Cube::VAO);
     glm::mat4 model = glm::mat4(1.0f);

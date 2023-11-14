@@ -3,8 +3,9 @@
 #include "include/renderableobj.h"
 class Cube : public RenderableObject {
 public:
-    Cube(int modelLoc, glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3 translate = glm::vec3(0.0f, 0.0f, 0.0f));
-    void render();
+    Cube(const int modelLoc, const glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f),
+        const glm::vec3 translate = glm::vec3(0.0f, 0.0f, 0.0f));
+    void render()const ;
     inline static unsigned int VAO, VBO, EBO;
 
 private:

@@ -1,4 +1,5 @@
 #include "include/camera.h"
+#include "include/circle.h"
 #include "include/common.h"
 #include "include/cube.h"
 #include "include/shader.h"
@@ -53,15 +54,17 @@ int main()
         "../src/ShadersGLSL/shader.frag");
 
     Camera ourCamera {
-        glm::vec3(0.0f, 0.0f, 3.0f),
+        glm::vec3(0.0f, 0.0f, 4.0f),
         glm::vec3(-0.0f, -0.0f, -1.0f),
         glGetUniformLocation(ourShader.ID, "view"),
         glGetUniformLocation(ourShader.ID, "projection")
     };
 
     int modelLoc { glGetUniformLocation(ourShader.ID, "model") };
-    Cube cube1 { modelLoc, glm::vec3(1.5f, 1.5f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f) };
-    Sphere sphere1 { modelLoc, 1.0f, 10, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f) };
+    // Cube cube1 { modelLoc, glm::vec3(1.5f, 1.5f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f) };
+    Circle circle1 { modelLoc, -1.0f, 1 };
+    circle1.setVertices(25);
+    circle1.recalculate();
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)+0);
     glEnableVertexAttribArray(0);
@@ -76,12 +79,12 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ourShader.use();
 
-        glm::vec3 color = glm::vec3(0.5f, 0.5f, 0.2f);
+        glm::vec3 color = glm::vec3(0.5f, 0.3f, 0.2f);
         glUniform3fv(glGetUniformLocation(ourShader.ID, "uniColor"), 1, glm::value_ptr(color));
 
-        sphere1.setRotation(0, glm::vec3(1.0f, 1.0f, 1.0f));
         ourCamera.process();
-        sphere1.render();
+
+        circle1.render();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
