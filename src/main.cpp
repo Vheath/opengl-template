@@ -39,7 +39,6 @@ int main()
         glfwTerminate();
         return -1;
     }
-    // glEnable(GL_DEPTH_TEST);
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -61,7 +60,6 @@ int main()
     };
 
     int modelLoc { glGetUniformLocation(ourShader.ID, "model") };
-    // Cube cube1 { modelLoc, glm::vec3(1.5f, 1.5f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f) };
     Circle circle1 { modelLoc, -1.0f, 10 };
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)+0);

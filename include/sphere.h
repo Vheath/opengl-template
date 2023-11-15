@@ -5,17 +5,14 @@
 
 class Sphere : public RenderableObject {
 public:
-    Sphere(const int modelLoc, const float radius, const unsigned int verticesAmount,
+    Sphere(const int modelLoc, const float radius,
         const glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f),
         const glm::vec3 translate = glm::vec3(0.0f, 0.0f, 0.0f));
-
     void render() const;
 
 private:
-    static bool firstCall;
     unsigned int VAO {}, VBO {}, EBO {};
     float mRadius;
-    unsigned int mVerticesAmount;
     std::vector<float> mVertices;
     std::vector<unsigned int> mIndicies;
 };
