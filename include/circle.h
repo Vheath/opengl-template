@@ -14,7 +14,9 @@ public:
     void setRadius(const float radius);
     void setVertices(const unsigned int verticesAmount);
     void recalculate();
+    // Rendering a circle and filling it
     void render() const;
+    // Rendering a circle without filling it
     void renderHollow() const;
 
 private:

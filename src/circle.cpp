@@ -21,12 +21,12 @@ Circle::Circle(const int modelLoc, const float radius, const unsigned int vertic
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glBindVertexArray(VAO);
-    float twicePi = 2.0f * glm::pi<float>();
+    constexpr float twicePi = 2.0f * glm::pi<float>();
 
-    for (int i = 0; i <= mVerticesAmount; ++i) {
-        mVertices.push_back(mRadius * std::cos(i * twicePi / mVerticesAmount));
-        mVertices.push_back(mRadius * std::sin(i * twicePi / mVerticesAmount));
-        mVertices.push_back(0.0f);
+    for (int i = 0; i < mVerticesAmount; ++i) {
+        mVertices.push_back(mRadius * std::cos(i * twicePi / mVerticesAmount)); // x
+        mVertices.push_back(mRadius * std::sin(i * twicePi / mVerticesAmount)); // y
+        mVertices.push_back(0.0f); // z
     }
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(float), mVertices.data(), GL_STATIC_DRAW);
@@ -44,10 +44,7 @@ unsigned int Circle::getVertices() const
 
 void Circle::setRadius(float radius)
 {
-    if (radius >= 0)
-        mRadius = radius;
-    else
-        mRadius = -radius;
+    mRadius = std::abs(radius);
 }
 
 void Circle::setVertices(unsigned int verticesAmount)
@@ -72,6 +69,7 @@ void Circle::recalculate()
     glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(float), mVertices.data(), GL_STATIC_DRAW);
 }
 
+// Rendering a circle without filling it
 void Circle::renderHollow() const
 {
     glBindVertexArray(VAO);
@@ -86,6 +84,7 @@ void Circle::renderHollow() const
     glDrawArrays(GL_LINE_LOOP, 0, mVerticesAmount);
 }
 
+// Rendering a circle and filling it
 void Circle::render() const
 {
     glBindVertexArray(VAO);

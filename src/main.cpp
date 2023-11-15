@@ -62,9 +62,7 @@ int main()
 
     int modelLoc { glGetUniformLocation(ourShader.ID, "model") };
     // Cube cube1 { modelLoc, glm::vec3(1.5f, 1.5f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f) };
-    Circle circle1 { modelLoc, -1.0f, 1 };
-    circle1.setVertices(25);
-    circle1.recalculate();
+    Circle circle1 { modelLoc, -1.0f, 10 };
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)+0);
     glEnableVertexAttribArray(0);
@@ -82,7 +80,13 @@ int main()
         glm::vec3 color = glm::vec3(0.5f, 0.3f, 0.2f);
         glUniform3fv(glGetUniformLocation(ourShader.ID, "uniColor"), 1, glm::value_ptr(color));
 
+        int cosTime = std::abs(std::cos(glfwGetTime()) * 40);
+        float sinTime = std::abs(std::sin(glfwGetTime()) / 2 + 0.7);
+
         ourCamera.process();
+        circle1.setVertices(cosTime);
+        circle1.setRadius(sinTime);
+        circle1.recalculate();
 
         circle1.render();
 
